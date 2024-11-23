@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addRecipe } from '../components/feature/Recipe/RecipeSlice';
+import { addRecipe } from '..feature/Recipe/RecipeSlice';
 
 const RecipeForm = () => {
   const [title, setTitle] = useState('');
