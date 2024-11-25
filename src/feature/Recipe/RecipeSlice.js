@@ -15,7 +15,7 @@ export const addRecipe = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(recipe),
       });
-      return await res.json(); // Return the added recipe
+      return await res.json(); 
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -48,7 +48,7 @@ export const deleteRecipe = createAsyncThunk(
   }
 );
 
-export const updateRecipe = createAsyncThunk(
+export const updateRecipe1 = createAsyncThunk(
   "recipes/updateRecipe",
   async (recipe, { rejectWithValue }) => {
     try {
@@ -57,7 +57,7 @@ export const updateRecipe = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(recipe),
       });
-      return await res.json(); // Return the updated recipe
+      return await res.json(); 
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -106,21 +106,21 @@ const recipeSlice = createSlice({
         state.error = action.error.message;
       })
 
-      .addCase(updateRecipe.pending, (state) => {
+      .addCase(updateRecipe1.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateRecipe.fulfilled, (state, action) => {
+      .addCase(updateRecipe1.fulfilled, (state, action) => {
         state.loading = false;
 
-        const updatedRecipe = action.payload;
+        const updatedRecipe1 = action.payload;
 
-        // Update the recipe in the state
+        
         state.recipes = state.recipes.map((recipe) =>
-          recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+          recipe.id === updatedRecipe1.id ? updatedRecipe1 : recipe
         );
       })
-      .addCase(updateRecipe.rejected, (state, action) => {
+      .addCase(updateRecipe1.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

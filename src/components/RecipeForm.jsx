@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addRecipe, updateRecipe } from "../feature/Recipe/RecipeSlice";
+import { addRecipe, updateRecipe1 } from "../feature/Recipe/RecipeSlice";
 import RecipeList from "./RecipeList";
 
 function RecipeForm() {
@@ -22,7 +22,7 @@ function RecipeForm() {
     if (updateId === "") {
       dispatch(addRecipe(recipe));
     } else {
-      dispatch(updateRecipe(recipe));
+      dispatch(updateRecipe1(recipe));
       setUpdateId("");
     }
     setRecipe({});
