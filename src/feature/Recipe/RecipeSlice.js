@@ -12,12 +12,10 @@ export const addRecipe = createAsyncThunk(
     try {
       const res = await fetch("http://localhost:3000/recipes", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(recipe),
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
-      return await res.json(); 
+      return await res.json(); // Return the added recipe
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -35,7 +33,6 @@ export const fetchRecipes = createAsyncThunk(
     }
   }
 );
-
 
 export const deleteRecipe = createAsyncThunk(
   "recipes/deleteRecipe",
@@ -55,29 +52,17 @@ export const updateRecipe = createAsyncThunk(
   "recipes/updateRecipe",
   async (recipe, { rejectWithValue }) => {
     try {
-      console.log("Updating recipe:", recipe);
       const res = await fetch(`http://localhost:3000/recipes/${recipe.id}`, {
         method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(recipe),
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
-
-      if (!res.ok) {
-        throw new Error(`Error: ${res.status} ${res.statusText}`);
-      }
-
-      const data = await res.json();
-      console.log("Update success:", data);
-      return data;
+      return await res.json(); // Return the updated recipe
     } catch (error) {
-      console.error("Update recipe error:", error.message);
       return rejectWithValue(error.message);
     }
   }
 );
-
 
 const recipeSlice = createSlice({
   name: "recipes",
@@ -110,6 +95,7 @@ const recipeSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.recipes = state.recipes.filter(
           (recipe) => recipe.id !== action.payload
@@ -119,6 +105,7 @@ const recipeSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+
       .addCase(updateRecipe.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -128,6 +115,7 @@ const recipeSlice = createSlice({
 
         const updatedRecipe = action.payload;
 
+        // Update the recipe in the state
         state.recipes = state.recipes.map((recipe) =>
           recipe.id === updatedRecipe.id ? updatedRecipe : recipe
         );
@@ -140,4 +128,3 @@ const recipeSlice = createSlice({
 });
 
 export default recipeSlice.reducer;
-

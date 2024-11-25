@@ -1,14 +1,25 @@
 {
   "recipes": [
     {
-      "id": "df59",
-      "title": "In aute architecto e",
-      "ingredients": "Nobis similique dele"
+      "id": "c7ff",
+      "title": "Ipsum unde velit vo",
+      "cookingTime": "87",
+      "category": "Aut ipsum vel aut si",
+      "ingredients": "Obcaecati eum quis q"
     },
     {
-      "id": "d099",
-      "title": "Dolore nisi quod non",
-      "ingredients": "Rem libero et sit n"
+      "id": "5c5f",
+      "title": "Occaecat consequat ",
+      "cookingTime": "34",
+      "category": "Esse placeat quam a",
+      "ingredients": "Qui non itaque venia"
+    },
+    {
+      "id": "2fc5",
+      "title": "Qui quod autem duis ",
+      "cookingTime": "81",
+      "category": "Sint magni animi po",
+      "ingredients": "Tempore quam dolor "
     }
   ]
 }

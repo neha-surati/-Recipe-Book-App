@@ -20,18 +20,16 @@ function RecipeList({ updateRecipe }) {
         {recipes.map((recipe) => (
           <div key={recipe.id} className="col-md-4">
             <div className="card mb-3">
-              <img
-                src={recipe.image}
-                className="card-img-top"
-                alt={recipe.name}
-              />
               <div className="card-body">
-                <h5 className="card-title">{recipe.name}</h5>
+                <h5 className="card-title">{recipe.title}</h5>
                 <p className="card-text">
                   <b>Ingredients:</b> {recipe.ingredients}
                 </p>
                 <p className="card-text">
-                  <b>Instructions:</b> {recipe.instructions}
+                  <b>Cooking Time:</b> {recipe.cookingTime} mins
+                </p>
+                <p className="card-text">
+                  <b>Category:</b> {recipe.category}
                 </p>
               </div>
               <div className="mx-3 mb-3">
@@ -45,7 +43,7 @@ function RecipeList({ updateRecipe }) {
                   className="btn btn-warning mx-3"
                   onClick={() => updateRecipe(recipe)}
                 >
-                  Update
+                  Edit
                 </button>
               </div>
             </div>

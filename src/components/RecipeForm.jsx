@@ -1,60 +1,101 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addRecipe } from '..feature/Recipe/RecipeSlice';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addRecipe, updateRecipe } from "../feature/Recipe/RecipeSlice";
+import RecipeList from "./RecipeList";
 
-const RecipeForm = () => {
-  const [title, setTitle] = useState('');
-  const [ingredients, setIngredients] = useState('');
+function RecipeForm() {
+  let [recipe, setRecipe] = useState({});
+  let [updateId, setUpdateId] = useState("");
+
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!title || !ingredients) {
-      alert('Title and Ingredients are required');
-      return;
-    }
+  let handleInput = (e) => {
+    let { name, value } = e.target;
+    setRecipe({ ...recipe, [name]: value });
+    console.log(recipe);
+  };
 
-    dispatch(addRecipe({ title, ingredients }));
-    setTitle('');
-    setIngredients('');
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(recipe);
+
+    if (updateId === "") {
+      dispatch(addRecipe(recipe));
+    } else {
+      dispatch(updateRecipe(recipe));
+      setUpdateId("");
+    }
+    setRecipe({});
+  };
+
+  let updateRecipeHandler = (recipe) => {
+    setRecipe(recipe);
+    setUpdateId(recipe.id);
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow-lg">
-        <div className="card-header bg-primary text-white text-center">
-          <h3>Add New Recipe</h3>
-        </div>
-        <div className="card-body">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="title" className="form-label">Recipe Title</label>
-              <input
-                type="text"
-                id="title"
-                className="form-control"
-                placeholder="Enter recipe title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="ingredients" className="form-label">Ingredients</label>
-              <textarea
-                id="ingredients"
-                className="form-control"
-                placeholder="Enter ingredients, separated by commas"
-                value={ingredients}
-                onChange={(e) => setIngredients(e.target.value)}
-                rows="4"
-              />
-            </div>
-            <button type="submit" className="btn btn-success w-100">Add Recipe</button>
-          </form>
-        </div>
+    <>
+      <div className="container">
+        <h4 className="text-center mt-4 text-decoration-underline">
+          Add Recipe
+        </h4>
+        <form className="w-75 mx-auto mt-5" onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">
+              <b>Recipe Title:</b>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="title"
+              onChange={handleInput}
+              value={recipe.title || ""}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">
+              <b>Ingredients:</b>
+            </label>
+            <textarea
+              className="form-control"
+              name="ingredients"
+              rows="4"
+              onChange={handleInput}
+              value={recipe.ingredients || ""}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">
+              <b>Cooking Time (in minutes):</b>
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              name="cookingTime"
+              onChange={handleInput}
+              value={recipe.cookingTime || ""}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">
+              <b>Category:</b>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="category"
+              onChange={handleInput}
+              value={recipe.category || ""}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+        <RecipeList updateRecipe={updateRecipeHandler} />
       </div>
-    </div>
+    </>
   );
-};
+}
 
 export default RecipeForm;
